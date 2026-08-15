@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vikkys Cookbook - Delicious Recipes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #FF6B6B;
+            --primary-dark: #E63946;
+            --secondary-color: #FFD93D;
+            --accent-color: #6BCB77;
+            --text-dark: #212121;
+            --text-light: #757575;
+            --bg-light: #FAFAFA;
+            --bg-white: #FFFFFF;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.9) 0%, rgba(230, 57, 70, 0.9) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="1200" height="600" fill="%23FF6B6B"/><rect width="1200" height="600" fill="url(%23grid)"/></svg>');
+            color: white;
+            padding: 5rem 1rem;
+            text-align: center;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--text-dark);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 1rem;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            font-size: 1rem;
+        }
+
+        /* Recipe Grid */
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .recipe-card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .recipe-content {
+            padding: 1.5rem;
+        }
+
+        .recipe-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .recipe-description {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .recipe-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .recipe-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .recipe-meta-item i {
+            color: var(--primary-color);
+        }
+
+        /* Categories Section */
+        .categories {
+            background-color: var(--bg-white);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(107, 203, 119, 0.1) 100%);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: scale(1.05);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .category-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Featured Section */
+        .featured {
+            background-color: var(--bg-white);
+        }
+
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            background: var(--bg-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .featured-card:nth-child(even) {
+            grid-template-columns: 1fr 1fr;
+            direction: rtl;
+        }
+
+        .featured-image {
+            height: 300px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+        }
+
+        .featured-content {
+            padding: 2rem;
+            direction: ltr;
+        }
+
+        .featured-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .featured-content p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .recipe-link {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .recipe-link:hover {
+            color: var(--primary-dark);
+            margin-left: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-links {
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            color: var(--text-dark);
+            transform: scale(1.1);
+        }
+
+        .footer-credit {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            .recipe-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-card,
+            .featured-card:nth-child(even) {
+                grid-template-columns: 1fr;
+                direction: ltr;
+            }
+
+            .featured-content {
+                direction: ltr;
+            }
+
+            .recipe-image,
+            .featured-image {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span class="material-icons">restaurant</span>
+                <span>Vikkys Cookbook</span>
+            </div>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#categories">Categories</a>
+                <a href="#featured">Featured</a>
+                <a href="#about">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to Vikkys Cookbook</h1>
+            <p>Discover delicious recipes, cooking tips, and culinary adventures</p>
+            <a href="#categories" class="cta-button">Explore Recipes</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <h2>Recipe Categories</h2>
+            <p class="section-subtitle">Explore our diverse collection of recipes</p>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-icon">🍝</div>
+                    <h3 class="category-title">Main Courses</h3>
+                    <p class="category-description">Delicious and satisfying main dishes for every occasion</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🥒</div>
+                    <h3 class="category-title">Appetizers</h3>
+                    <p class="category-description">Start your meal with exciting appetizers and starters</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🍪</div>
+                    <h3 class="category-title">Desserts</h3>
+                    <p class="category-description">Sweet treats and desserts to satisfy your cravings</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🥤</div>
+                    <h3 class="category-title">Beverages</h3>
+                    <p class="category-description">Refreshing drinks and beverages for any season</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Recipes -->
+    <section class="featured" id="featured">
+        <div class="container">
+            <h2>Featured Recipes</h2>
+            <p class="section-subtitle">Our most loved recipes</p>
+
+            <!-- Featured Recipe 1: Rabdi Kheer -->
+            <div class="featured-card">
+                <div class="featured-image">🍛</div>
+                <div class="featured-content">
+                    <h3>Rabdi Kheer</h3>
+                    <p>A creamy and luxurious Indian rice pudding infused with saffron and caramel. This classic dessert is smooth, rich, and perfect for special occasions.</p>
+                    <div class="recipe-meta">
+                        <div class="recipe-meta-item">
+                            <span class="material-icons">schedule</span>
+                            <span>35 mins prep</span>
+                        </div>
+                        <div class="recipe-meta-item">
+                            <span class="material-icons">people</span>
+                            <span>6 servings</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem;">
+                        <a href="https://github.com/vikkysri77/Vikkys_cookbook-/blob/main/desserts/rabdi-kheer.md" class="recipe-link">View Full Recipe →</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Featured Recipe 2: Pasta Carbonara -->
+            <div class="featured-card">
+                <div class="featured-image">🍝</div>
+                <div class="featured-content">
+                    <h3>Pasta Carbonara</h3>
+                    <p>A classic Italian pasta dish that's simple yet delicious. Creamy, rich, and absolutely authentic - this is the perfect comfort food that comes together in minutes.</p>
+                    <div class="recipe-meta">
+                        <div class="recipe-meta-item">
+                            <span class="material-icons">schedule</span>
+                            <span>10 mins prep</span>
+                        </div>
+                        <div class="recipe-meta-item">
+                            <span class="material-icons">people</span>
+                            <span>4 servings</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem;">
+                        <a href="https://github.com/vikkysri77/Vikkys_cookbook-/blob/main/main-courses/sample-recipe.md" class="recipe-link">View Full Recipe →</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Featured Recipe 3: Chocolate Chip Cookies -->
+            <div class="featured-card">
+                <div class="featured-image">🍪</div>
+                <div class="featured-content">
+                    <h3>Chocolate Chip Cookies</h3>
+                    <p>Classic, chewy chocolate chip cookies that are perfect for any occasion. These cookies are simple to make, delicious, and impossible to resist.</p>
+                    <div class="recipe-meta">
+                        <div class="recipe-meta-item">
+                            <span class="material-icons">schedule</span>
+                            <span>15 mins prep</span>
+                        </div>
+                        <div class="recipe-meta-item">
+                            <span class="material-icons">people</span>
+                            <span>24 cookies</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem;">
+                        <a href="https://github.com/vikkysri77/Vikkys_cookbook-/blob/main/desserts/sample-recipe.md" class="recipe-link">View Full Recipe →</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="background-color: var(--bg-white);">
+        <div class="container">
+            <h2>About This Cookbook</h2>
+            <p class="section-subtitle">A collection of recipes with love</p>
+            <div style="max-width: 600px; margin: 0 auto; text-align: center; color: var(--text-light);">
+                <p style="margin-bottom: 1rem;">
+                    Welcome to Vikkys Cookbook! This is a personal collection of my favorite recipes, cooking tips, and culinary experiments. Each recipe is carefully tested and documented to help you recreate these dishes in your own kitchen.
+                </p>
+                <p style="margin-bottom: 1rem;">
+                    From classic Italian pasta to traditional Indian desserts, you'll find a diverse range of recipes that celebrate different cuisines and flavors. Whether you're a beginner or an experienced cook, there's something here for everyone.
+                </p>
+                <p>
+                    Happy cooking! 🍳
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/vikkysri77/Vikkys_cookbook-">View on GitHub</a>
+                <a href="https://github.com/vikkysri77">My GitHub</a>
+                <a href="mailto:vikkysri77@gmail.com">Contact</a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/vikkysri77" title="GitHub">
+                    <span class="material-icons">code</span>
+                </a>
+                <a href="mailto:vikkysri77@gmail.com" title="Email">
+                    <span class="material-icons">mail</span>
+                </a>
+            </div>
+            <div class="footer-credit">
+                <p>&copy; 2026 Vikkys Cookbook. All recipes are carefully crafted with love. 🍳</p>
+                <p>Powered by GitHub Pages</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
